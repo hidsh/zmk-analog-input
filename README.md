@@ -63,7 +63,7 @@ You may need to adjust some [properties](https://github.com/hidsh/zmk-analog-inp
 |`scale-divisor` | to decrease count |
 
 
-At first, enable the following configs in [analog-input.conf]():
+At first, enable the following configs in [analog-input.conf](boards/shields/analog-input/analog-input.conf):
 ```
 CONFIG_ANALOG_INPUT_LOG_LEVEL_DBG=y
 CONFIG_ANALOG_INPUT_LOG_DBG_RAW=y
