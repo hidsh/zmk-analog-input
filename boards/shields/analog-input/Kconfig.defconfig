@@ -1,0 +1,10 @@
+if SHIELD_ANALOG_INPUT
+
+    config ZMK_KEYBOARD_NAME
+        default "ANALOG-INPUT"
+
+    config ZMK_BLE
+        bool
+        default y
+
+endif

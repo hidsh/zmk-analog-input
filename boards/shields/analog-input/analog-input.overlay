@@ -1,0 +1,89 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <input/processors.dtsi>
+
+#include <dt-bindings/zmk/input_transform.h>
+
+/ {
+    kscan0: kscan0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        wakeup-source;
+
+        col-gpios
+            = <&xiao_d 0 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 1 GPIO_ACTIVE_HIGH>
+            ;
+
+        row-gpios
+            = <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+    };
+
+    default_transform: keymap_transform0 {
+        compatible = "zmk,matrix-transform";
+        columns = <2>;
+        rows = <2>;
+        map = <
+            RC(0,0) RC(0,1)
+            RC(1,0) RC(1,1)
+        >;
+    };
+
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+    };
+};
+
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+/* Reference: https://docs.zephyrproject.org/apidoc/latest/group__input__events.html */
+
+&adc {
+	status = "okay";
+};
+
+/ {
+	ain0: analog_input_0 {
+		compatible = "zmk,analog-input";
+		sampling-hz = <100>;
+		y-ch {
+			io-channels = <&adc 2>;     // <--- &adc 2: P0.04 (XIAO #5 D4)
+			mv-mid = <1950>;
+			mv-min-max = <1600>;
+			mv-deadzone = <200>;
+			scale-multiplier = <1>;
+			scale-divisor = <200>;
+			invert;
+			evt-type = <INPUT_EV_REL>;
+			input-code = <INPUT_REL_Y>;
+		};
+		x-ch {
+			io-channels = <&adc 3>;     // <--- &adc 3: P0.05 (XIAO #6 D5)
+			mv-mid = <1950>;
+			mv-min-max = <1600>;
+			mv-deadzone = <200>;
+			scale-multiplier = <1>;
+			scale-divisor = <200>;
+			invert;
+			evt-type = <INPUT_EV_REL>;
+			input-code = <INPUT_REL_X>;
+
+			/* enable report mdoe for gamepad axix or knob */
+			/* to only call input_report on quantquantized value is updated */
+			/* NOTE: mouse input does NOT need this */
+			// report-on-change-only;
+
+		};
+	};
+
+    analog_input_listener {
+        status = "okay";
+        compatible = "zmk,input-listener";
+        device = <&ain0>;
+        // input-processors = <&zip_xy_to_scroll_mapper>;                    // acts as a scroll wheel
+        input-processors = <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>;  // acts as mouse
+    };
+};
