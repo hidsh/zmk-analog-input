@@ -7,7 +7,7 @@ This project is for checking built-in AD-Converter using badjeff's [zmk-analog-i
 - modules: https://github.com/badjeff/zmk-analog-input-driver
 
 ## Connection to XIAO nRF52840
-![schematic](img/)
+![schematic](img/xiao-nrf--zmk-analog-input.png)
 
 ## Local Build
 ### Prerequisites
@@ -37,7 +37,7 @@ make
 
 ## AD-Channels
 
-You would specify the channels in the [overlay]().
+You would specify the channels in the [overlay](https://github.com/hidsh/zmk-analog-input/blob/master/boards/shields/analog-input/analog-input.overlay).
 For XIAO-BLE(nRF52840), `<&adc #>` means as below:
 
 |&adc #|GPIO|XIAO-BLE|
@@ -53,7 +53,7 @@ For XIAO-BLE(nRF52840), `<&adc #>` means as below:
 
 ## Adjusting the input
 
-You may need to adjust some [properties]() depends on your thumb stick:
+You may need to adjust some [properties](https://github.com/hidsh/zmk-analog-input/blob/e7986f12a1f4c9f46df2857d47486299a9e3ba99/boards/shields/analog-input/analog-input.overlay#L54-L58) depends on your thumb stick:
 |prop|desc|
 |---|:---|
 |`mv-mid`| neutral AD value |
@@ -88,12 +88,12 @@ tio /dev/ttyACM0 | myfilter -x apply_config advertising movement scroll rv AIN3
 
 ## note
 
-This example may cause troubles while running. there is a detailed explanation below:
+This example may cause troubles while running. There is a detailed explanation below:
 
 https://github.com/badjeff/zmk-analog-input-driver?tab=readme-ov-file#troubleshooting
 
 ## reference
 - [badjeff/zmk-analog-input-driver](https://github.com/badjeff/zmk-analog-input-driver)
-- [transformer input processor](https://zmk.dev/docs/keymaps/input-processors/transformer)
-- [scaler input processor](https://zmk.dev/docs/keymaps/input-processors/scaler)
+- [ZMK Official Doc/transformer input processor](https://zmk.dev/docs/keymaps/input-processors/transformer)
+- [ZMK Official Doc/scaler input processor](https://zmk.dev/docs/keymaps/input-processors/scaler)
 
