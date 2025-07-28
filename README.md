@@ -56,12 +56,11 @@ For XIAO-BLE(nRF52840), `<&adc #>` means as below:
 You may need to adjust some [properties](https://github.com/hidsh/zmk-analog-input/blob/e7986f12a1f4c9f46df2857d47486299a9e3ba99/boards/shields/analog-input/analog-input.overlay#L54-L58) depends on your thumb stick:
 |prop|desc|
 |---|:---|
-|`mv-mid`| neutral AD value |
+|`mv-mid`| neutral |
 |`mv-min-max` | available range |
 |`mv-deadzone` | deadzone |
-|`scale-multiplier` | to increase count |
-|`scale-divisor` | to decrease count |
-
+|`scale-multiplier` | speed up |
+|`scale-divisor` | slow down |
 
 At first, enable the following configs in [analog-input.conf](boards/shields/analog-input/analog-input.conf):
 ```
@@ -72,9 +71,9 @@ CONFIG_ANALOG_INPUT_LOG_DBG_REPORT=y
 
 Next, rebuid/flash new firmware.
 
-Then, check the raw values from the zmk to determine the properties mentioned above.
+Then, check the `raw` values from the usb-logger to determine appropriate values for the properties mentioned above.
 
-I use [tio](https://github.com/tio/tio) and my [trivial filter](https://gist.github.com/hidsh/a3ee73315be6d654c0cc74f553d0c1a9) in these case:
+I use [tio](https://github.com/tio/tio) and my [trivial filter](https://gist.github.com/hidsh/a3ee73315be6d654c0cc74f553d0c1a9) in these case like:
 ```
 tio /dev/ttyACM0 | myfilter -x apply_config advertising movement scroll rv AIN3
 
@@ -84,6 +83,7 @@ tio /dev/ttyACM0 | myfilter -x apply_config advertising movement scroll rv AIN3
 [00:00:36.458,374] <dbg> ANALOG_INPUT: analog_input_report_data: AIN2 raw: 1955 mv: 1718
 [00:00:36.468,353] <dbg> ANALOG_INPUT: analog_input_report_data: AIN2 raw: 1959 mv: 1721
      :
+                                                                           ^^^^ check!
 ```
 
 ## note
