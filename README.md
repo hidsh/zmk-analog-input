@@ -71,7 +71,7 @@ CONFIG_ANALOG_INPUT_LOG_DBG_REPORT=y
 
 Next, rebuid/flash new firmware.
 
-Then, check the `raw` values from the usb-logger to determine appropriate values for the properties mentioned above.
+Then, check the `mv` values from the usb-logger to determine appropriate values for the properties mentioned above.
 
 I use [tio](https://github.com/tio/tio) and my [trivial filter](https://gist.github.com/hidsh/a3ee73315be6d654c0cc74f553d0c1a9) in these case like:
 ```
@@ -82,8 +82,7 @@ tio /dev/ttyACM0 | myfilter -x apply_config advertising movement scroll rv AIN3
 [00:00:36.448,303] <dbg> ANALOG_INPUT: analog_input_report_data: AIN2 raw: 1967 mv: 1728
 [00:00:36.458,374] <dbg> ANALOG_INPUT: analog_input_report_data: AIN2 raw: 1955 mv: 1718
 [00:00:36.468,353] <dbg> ANALOG_INPUT: analog_input_report_data: AIN2 raw: 1959 mv: 1721
-     :
-                                                                           ^^^^ check!
+     :                                                                      Check---^^^^
 ```
 
 ## note
